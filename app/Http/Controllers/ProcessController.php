@@ -202,3 +202,5 @@ class ProcessController extends Controller
         return back()->with('info', 'Eliminado con exito');
     }
 }
+
+    

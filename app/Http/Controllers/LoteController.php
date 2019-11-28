@@ -262,8 +262,19 @@ class LoteController extends Controller
      */
     public function destroy(Lote $lote)
     {
-        $lote->delete();
+   
+        //se buscan las id de todas las relaciones con el Lote actual
+        $lotes = DB::table('lote__sub_process')->where('lotes_id',$lotes->id)->get();
+        
+        //se cambia el estado de los subprocesos para usarlar nuevamente
+        foreach($lotes as $busquedalote){
+            SubProcess::where('id', $busquedalote->subprocess_id)->update(['available' => 1]);
+        }
+        //se borra el Lote
+        $lotes->delete();
 
+        //devuelve a la vista
         return back()->with('info', 'Eliminado con exito');
+    
     }
 }
