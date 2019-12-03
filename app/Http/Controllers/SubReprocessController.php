@@ -25,7 +25,7 @@ class SubReprocessController extends Controller
 
      public function delete(){
       
-        $subreprocesses = SubReprocess::where('available', 0)->orderBy('id', 'ASC')->paginate(50);
+        $subreprocesses = SubReprocess::where('available', 1)->orderBy('id', 'ASC')->paginate(50);
        
         return view('subreprocess.delete', compact('subreprocesses' ));
 
@@ -272,7 +272,12 @@ class SubReprocessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SubReProcess $subreprocess)
     {
+        //se borra el Lote
+        $subreprocess->delete();
+
+        //devuelve a la vista
+        return back()->with('info', 'Eliminado con exito');
     }
 }

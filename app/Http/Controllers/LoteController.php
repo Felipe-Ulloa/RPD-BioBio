@@ -26,7 +26,7 @@ class LoteController extends Controller
 
      public function delete(){
       
-        $lotes = Lote::where('available', 0)->orderBy('id', 'ASC')->paginate(50);
+        $lotes = Lote::where('available', 1)->orderBy('id', 'ASC')->paginate(50);
        
         return view('lotes.delete', compact('lotes' ));
 
@@ -264,14 +264,14 @@ class LoteController extends Controller
     {
    
         //se buscan las id de todas las relaciones con el Lote actual
-        $lotes = DB::table('lote__sub_process')->where('lotes_id',$lotes->id)->get();
+        $lote = DB::table('lote__sub_process')->where('lote_id',$lote->id)->get();
         
         //se cambia el estado de los subprocesos para usarlar nuevamente
-        foreach($lotes as $busquedalote){
+        foreach($lote as $busquedalote){
             SubProcess::where('id', $busquedalote->subprocess_id)->update(['available' => 1]);
         }
         //se borra el Lote
-        $lotes->delete();
+        $lote->delete();
 
         //devuelve a la vista
         return back()->with('info', 'Eliminado con exito');

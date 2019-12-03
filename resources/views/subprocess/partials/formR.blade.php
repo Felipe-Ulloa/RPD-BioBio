@@ -56,7 +56,7 @@
 				<div class="col-md-2">
 					<div class="form-group">
 						{{ Form::label('', 'N° Tarja') }}
-						{{ Form::text('tarja', 'RSP00'.$lastid, ['class' => 'form-control','readonly']) }}
+						{{ Form::text('tarja', 'PT00'.$lastid, ['class' => 'form-control','readonly']) }}
 					</div>
 
 					<input name="process_id" type="hidden" value={{$idsad}}>
@@ -64,7 +64,7 @@
 				<div class="col-md-2">
 					<div class="form-group">
 						{{ Form::label('quantity', 'Cantidad de Cajas') }}
-						{{ Form::number('quantity', null, ['class' => 'form-control input-number','id'=>'cantidad','oninput'=>'getWeightFormat()']) }}
+						{{ Form::text('quantity', null, ['class' => 'form-control input-number','id'=>'cantidad','oninput'=>'getWeightFormat()']) }}
 					</div>
 				</div>
 
@@ -82,12 +82,12 @@
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-						<label> Kg Procesados </label>
-						<input name="weight" class="form-control" id="weight" onkeyup="this.onchange();"
+						<label hidden > Kg Procesados </label>
+						<input hidden name="weight" class="form-control" id="weight" onkeyup="this.onchange();"
 							onpaste="this.onchange();" oninput="this.onchange();" onchange="validacion()" type="number"
 							readonly>
 					</div>
-				</div class="col-xl-10">
+			</div class="col-xl-10">
 				<div class="col-md-6">
 					<div  class="form-group">
 						<label> Inicio de folio </label>
@@ -159,7 +159,7 @@
 			<tbody>
 				@foreach($subprocesses as $subprocess)
 				<tr>
-					<td> SP00{{$subprocess->id}} </td>
+					<td> PT00{{$subprocess->id}} </td>
 					<td> {{$subprocess->format->name}} </td>
 					<td> {{$subprocess->quality->name}} </td>
 					<td> {{$subprocess->quantity}} </td>
@@ -242,15 +242,4 @@
 		}
 	}
 	
-	
-
-</script>
-
-<!-- Permitir solo numeros, puntos y X-->
-<script type="text/javascript">
-	$(document).ready(function (){
-  $('.input-number').keyup(function (){
-	this.value = (this.value + '').replace(/[^.x0-9]/g, '');
-  });
-});
 </script>

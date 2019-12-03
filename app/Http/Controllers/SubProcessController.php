@@ -30,16 +30,16 @@ class SubProcessController extends Controller
 
     public function delete(){
       
-        $subprocesses = SubProcess::where('available', 0)->orderBy('id', 'ASC')->paginate(50);
+        $subprocesses = SubProcess::where('available', 1)->orderBy('id', 'ASC')->paginate(50);
        
         return view('subprocess.delete', compact('subprocesses' ));
 
         
     }
-    public function index()
+   public function index()
     {
         $subprocesses = SubProcess::paginate(50);
- 
+
         return view('subprocess.index', compact('subprocesses'));
     }
 
@@ -231,7 +231,13 @@ class SubProcessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubProcess $subProcess)
+    public function destroy(SubProcess $subprocess)
     {
+    
+        //se borra el Lote
+        $subprocess->delete();
+
+        //devuelve a la vista
+        return back()->with('info', 'Eliminado con exito');
     }
 }
